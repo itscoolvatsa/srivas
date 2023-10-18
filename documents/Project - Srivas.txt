@@ -1,0 +1,63 @@
+Renting App: Flats
+------------------
+
+Customer - who wants to book the room/flat.
+Room Owner - who wants their flat to be rented.
+
+Room Owner will add the room as well as the details of it.
+Details added by Room Owner - 
+-----------------------------
+Address of flat
+Rent Info
+Pictures
+Advance(security deposite)
+Owner phone number
+Onwer name
+
+Room Onwer creates his/her account with us, what info they have to fill ?
+-------------------------------------------------------------------------
+Name
+Mobile Numer
+Email
+Password
+Address
+
+Customer Details
+------------------
+Name
+Mobile Numer
+Email
+Password
+
+Package(subscription ) - this will be attached to customers.
+------------------------------------------------------------
+I need 3 packages option.
+
+
+Website - Srivas(flat booking website)
+--------------------------------------
+www.srivas.com
+
+UI - All the rooms which are uploaded by different room owners(1000).
+Room will in the list form once custmer clicks on it it will show the details of the room.
+
+If customer is not logged in and clicks on Get Owner Details - We will ask to signup or signIn.
+If customer is logged in and clicks on Get Owner Details - We will ask to choose a packages and attach it to the customer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

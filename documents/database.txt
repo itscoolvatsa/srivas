@@ -1,0 +1,66 @@
+
+    **Owner Collection:**
+
+    - `_id`: Automatically generated unique identifier by MongoDB.
+    - `name`: Owner's name (String).
+    - `mobileNumber`: Owner's mobile number (String).
+    - `email`: Owner's email (String).
+    - `password`: Owner's password (String).
+    - `address`: Embedded document for address information (Object).
+        - `name`: Name (String).
+        - `houseNumber`: House number (String).
+        - `street`: Street (String).
+        - `locality`: Locality (String).
+        - `landmark`: Landmark (String).
+        - `city`: City (String).
+        - `state`: State (String).
+        - `pincode`: Pincode (String).
+    - `properties`: Array of owned properties (Array of Objects).
+        - `property`: Reference to Property Collection (One-to-Many).
+
+    **Customer Collection:**
+
+    - `_id`: Automatically generated unique identifier by MongoDB.
+    - `name`: Customer's name (String).
+    - `mobileNumber`: Customer's mobile number (String).
+    - `email`: Customer's email (String).
+    - `password`: Customer's password (String).
+    - `package`: Reference to Package Collection (One-to-One).
+
+    **Package Collection:**
+
+    - `_id`: Automatically generated unique identifier by MongoDB.
+    - `totalView`: Total view count (Integer).
+    - `createdAt`: Created at (Date).
+    - `remainingView`: Remaining view count (Integer).
+
+    **PackageEnum Collection (as an enum-like collection):**
+
+    - `_id`: Automatically generated unique identifier by MongoDB.
+    - `name`: Name of the package (String).
+    - `price`: Price (Float).
+    - `totalView`: Total view count (Integer).
+
+    **Property Collection:**
+
+    - `_id`: Automatically generated unique identifier by MongoDB.
+    - `address`: Embedded document for address information (Object).
+        - `name`: Name (String).
+        - `houseNumber`: House number (String).
+        - `street`: Street (String).
+        - `locality`: Locality (String).
+        - `landmark`: Landmark (String).
+        - `city`: City (String).
+        - `state`: State (String).
+        - `pincode`: Pincode (String).
+    - `rent`: Rent amount (Float).
+    - `deposit`: Deposit amount (Float).
+    - `areaSqFt`: Area in square feet (Float).
+    - `bedroom`: Number of bedrooms (Integer).
+    - `parking`: Parking availability (String: Car, Bike, No-Parking).
+    - `postedOn`: Date when property was posted (Date).
+    - `furnishingStatus`: Furnishing status (Boolean: true or false).
+    - `bathroom`: Number of bathrooms (Integer).
+    - `gatedSecurity`: Gated security availability (Boolean: true or false).
+    - `floor`: Object with current floor (Integer) and total floor (Integer).
+    - `description`: Property description (String).

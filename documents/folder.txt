@@ -1,0 +1,9 @@
+controller: Contains REST API controllers. These classes handle HTTP requests and define your API endpoints.
+service: Houses service classes responsible for business logic and act as intermediaries between controllers and repositories.
+repository: Repository classes for database access and data storage.
+model: Includes entity classes that represent the data structures used in your API.
+dto: Data Transfer Objects (DTOs) used for input and output of your API.
+config: Configuration classes, such as Spring configuration, security configuration, and database configuration.
+exception: Custom exception classes for handling errors and exceptions.
+util: Utility classes that provide common functions or methods.
+security: Security-related classes for authentication and authorization.
