@@ -1,6 +1,6 @@
 package com.srivas.service;
 
-import com.srivas.dto.OwnerDto;
+import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.model.AddressModel;
 import com.srivas.model.OwnerModel;
 import com.srivas.repository.IAddressRepo;
@@ -16,9 +16,9 @@ public class OwnerServiceImpl implements IOwnerService {
     private IAddressRepo addressRepo;
 
     @Override
-    public String createOwner(OwnerDto ownerDto) {
-        OwnerModel ownerModel = ownerDto.createOwner();
-        OwnerModel count = ownerRepo.countOwnerByEmail(ownerModel.getEmail());
+    public String createOwner(OwnerSignUpDto ownerSignUpDto) {
+        OwnerModel ownerModel = ownerSignUpDto.createOwner();
+        OwnerModel count = ownerRepo.findOwnerByEmail(ownerModel.getEmail());
         if (count != null) {
             System.out.println(count.getEmail());
             return null;
@@ -30,5 +30,10 @@ public class OwnerServiceImpl implements IOwnerService {
         return ownerRepo
                 .save(ownerModel)
                 .getId();
+    }
+
+    @Override
+    public OwnerModel signInOwner(String email) {
+        return ownerRepo.findOwnerByEmail(email);
     }
 }

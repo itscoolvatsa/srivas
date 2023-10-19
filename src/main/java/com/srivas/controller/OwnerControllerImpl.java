@@ -1,7 +1,11 @@
 package com.srivas.controller;
 
-import com.srivas.dto.OwnerDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.srivas.dto.owner.OwnerResponseDto;
+import com.srivas.dto.owner.OwnerSignInDto;
+import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.exception.ErrorsEnum;
+import com.srivas.model.OwnerModel;
 import com.srivas.service.OwnerServiceImpl;
 import com.srivas.util.JsonResponse;
 import jakarta.validation.Valid;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/owner")
@@ -22,21 +27,66 @@ public class OwnerControllerImpl implements IOwnerController {
     private OwnerServiceImpl ownerService;
 
     @Override
-    @PostMapping("/create")
-    public ResponseEntity<JsonResponse> createOwner(@Valid @RequestBody OwnerDto ownerDto) {
-        String id = ownerService.createOwner(ownerDto);
+    @PostMapping("/signup")
+//    public ResponseEntity<JsonResponse> createOwner(@Valid @RequestBody OwnerSignUpDto ownerSignUpDto) {
+//        String id = ownerService.createOwner(ownerSignUpDto);
+//        HashMap<String, Object> hashMap = new HashMap<>();
+//
+//        if (id == null) {
+//            hashMap.put("error", "user already exists");
+//            return new ResponseEntity<>(new JsonResponse(ErrorsEnum.USER_ALREADY_EXISTS, hashMap,
+//                    false),
+//                    HttpStatus.BAD_REQUEST);
+//        }
+//
+//        hashMap.put("user", ownerSignUpDto.toString());
+//        return new ResponseEntity<>(new JsonResponse("owner created", hashMap, true),
+//                HttpStatus.CREATED);
+//    }
+    public ResponseEntity<JsonResponse<Object>> createOwner(@Valid @RequestBody OwnerSignUpDto ownerSignUpDto) {
+        String id = ownerService.createOwner(ownerSignUpDto);
         HashMap<String, Object> hashMap = new HashMap<>();
 
         if (id == null) {
             hashMap.put("error", "user already exists");
-            return new ResponseEntity<>(new JsonResponse(ErrorsEnum.USER_ALREADY_EXISTS, hashMap,
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.USER_ALREADY_EXISTS, hashMap,
+                    false), HttpStatus.BAD_REQUEST);
+        }
+
+        hashMap.put("user", ownerSignUpDto.toString());
+        return new ResponseEntity<>(new JsonResponse<>("owner created", hashMap, true), HttpStatus.CREATED);
+    }
+
+
+    @Override
+    @PostMapping("/signin")
+    public ResponseEntity<JsonResponse<Object>> signInOwner(@Valid @RequestBody OwnerSignInDto ownerSignInDto) throws JsonProcessingException {
+        OwnerModel ownerModel = ownerService.signInOwner(ownerSignInDto.getEmail());
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        if (ownerModel == null) {
+            hashMap.put("error", "user doesn't exists");
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.USER_DOES_NOT_EXISTS, hashMap,
                     false),
                     HttpStatus.BAD_REQUEST);
         }
 
-        hashMap.put("user", ownerDto.toString());
+        if (!Objects.equals(ownerModel.getPassword(), ownerSignInDto.getPassword())) {
+            hashMap.put("error", "invalid credentials");
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.INVALID_CREDENTIALS, hashMap,
+                    false),
+                    HttpStatus.BAD_REQUEST);
+        }
 
-        return new ResponseEntity<>(new JsonResponse("owner created", hashMap, true),
+        OwnerResponseDto ownerResponseDto = OwnerResponseDto
+                .builder()
+                .id(ownerModel.getId())
+                .name(ownerModel.getName())
+                .email(ownerModel.getEmail())
+                .build();
+
+        hashMap.put("user", ownerResponseDto);
+        return new ResponseEntity<>(new JsonResponse<>("Signed In Successfully", hashMap, true),
                 HttpStatus.CREATED);
     }
 }
