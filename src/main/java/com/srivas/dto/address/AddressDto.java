@@ -1,5 +1,6 @@
-package com.srivas.dto;
+package com.srivas.dto.address;
 
+import com.srivas.model.AddressModel;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
@@ -22,8 +23,7 @@ public class AddressDto {
     @Size(min = 2, max = 32, message = "street number/name must be between 2 to 32 characters")
     private String street;
     @Field("locality")
-    @Null
-    @Size(min = 3, max = 32, message = "locality name must be between 3 to 32 characters")
+    @Size(min = 0, max = 32, message = "locality name must be between 0 to 32 characters")
     private String locality;
     @Field("landmark")
     @NotNull(message = "landmark should not be empty")
@@ -41,4 +41,18 @@ public class AddressDto {
     @NotNull(message = "pincode should not be empty")
     @Size(min = 4, max = 32, message = "pincode must be between 4 to 32 characters")
     private String pincode;
+
+    public AddressModel createAddress() {
+        return AddressModel
+                .builder()
+                .name(this.name)
+                .houseNumber(this.houseNumber)
+                .street(this.street)
+                .locality(this.locality)
+                .landmark(this.landmark)
+                .city(this.city)
+                .state(this.state)
+                .pincode(this.pincode)
+                .build();
+    }
 }

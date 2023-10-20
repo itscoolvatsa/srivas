@@ -17,7 +17,7 @@ public class ValidationExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public ResponseEntity<JsonResponse> handleValidationException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<JsonResponse<Object>> handleValidationException(MethodArgumentNotValidException ex) {
         List<String> errors = new ArrayList<>();
         ex
                 .getBindingResult()
@@ -27,8 +27,9 @@ public class ValidationExceptionHandler {
                 });
 
         HashMap<String, String> errorResponse = new HashMap<>();
-        errorResponse.put("validation error", errors.toString());
+        errorResponse.put("error", errors.toString());
 
-        return new ResponseEntity<>(new JsonResponse(ErrorsEnum.VALIDATION_ERROR, errorResponse, false), HttpStatus.CREATED);
+        return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.VALIDATION_ERROR, errorResponse, false),
+                HttpStatus.BAD_REQUEST);
     }
 }

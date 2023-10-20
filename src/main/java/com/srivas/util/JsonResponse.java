@@ -26,5 +26,8 @@ public class JsonResponse<T> {
     }
 
     public JsonResponse(T errorsEnum, T hashMap, T b) {
+        this.Message = errorsEnum.toString();
+        this.data = (HashMap<Object, T>) hashMap;
+        this.type = (Boolean) b;
     }
 }

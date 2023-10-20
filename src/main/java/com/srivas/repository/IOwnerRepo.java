@@ -8,4 +8,6 @@ import org.springframework.data.mongodb.repository.Query;
 public interface IOwnerRepo extends MongoRepository<OwnerModel, String> {
     @Query("{email:'?0'}")
     OwnerModel findOwnerByEmail(String email);
+    @Query("{_id:'?0'}")
+    OwnerModel findOwnerById(String id);
 }
