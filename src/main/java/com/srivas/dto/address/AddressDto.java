@@ -23,7 +23,8 @@ public class AddressDto {
     @Size(min = 2, max = 32, message = "street number/name must be between 2 to 32 characters")
     private String street;
     @Field("locality")
-    @Size(min = 0, max = 32, message = "locality name must be between 0 to 32 characters")
+    @NotNull(message = "locality should not be empty")
+    @Size(min = 3, max = 32, message = "locality name must be between 3 to 32 characters")
     private String locality;
     @Field("landmark")
     @NotNull(message = "landmark should not be empty")

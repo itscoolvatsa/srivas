@@ -2,6 +2,7 @@ package com.srivas.service;
 
 import com.srivas.dto.address.AddressDto;
 import com.srivas.model.AddressModel;
+import com.srivas.model.OwnerModel;
 import com.srivas.repository.IAddressRepo;
 import com.srivas.repository.IOwnerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,10 +18,13 @@ public class OwnerAddressServiceImpl implements IOwnerAddressService{
     private IAddressRepo addressRepo;
 
     @Override
-    public AddressModel getOwnerAddressById(String id) {
-        String addressId = ownerRepo.findOwnerById(id).getAddress().getId();
-        AddressModel addressModel = addressRepo.findAddressByOwnerReferenceID(addressId);
-        return addressModel;
+    public AddressModel getOwnerAddressByOwnerId(String id) {
+        OwnerModel ownerModel = ownerRepo.findOwnerById(id);
+        if(ownerModel == null) {
+            return null;
+        }
+        String addressId = ownerModel.getAddress().getId();
+        return addressRepo.findAddressByOwnerReferenceID(addressId);
     }
 
     @Override

@@ -31,7 +31,7 @@ public class AddressModel {
     @Size(min = 2, max = 32, message = "street number/name must be between 2 to 32 characters")
     private String street;
     @Field("locality")
-    @Null
+    @NotNull(message = "locality should not be empty")
     @Size(min = 3, max = 32, message = "locality name must be between 3 to 32 characters")
     private String locality;
     @Field("landmark")

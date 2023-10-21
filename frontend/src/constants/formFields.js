@@ -69,4 +69,79 @@ const loginFields = [
   },
 ];
 
-export { loginFields, signupFields };
+const addressFields = [
+  {
+    labelText: "name",
+    id: "name",
+    name: "name",
+    type: "name",
+    autoComplete: "name",
+    isRequired: true,
+    placeholder: "Name",
+  },
+  {
+    labelText: "houseNumber",
+    id: "houseNumber",
+    name: "houseNumber",
+    type: "houseNumber",
+    autoComplete: "houseNumber",
+    isRequired: true,
+    placeholder: "House Number",
+  },
+  {
+    labelText: "street",
+    id: "street",
+    name: "street",
+    type: "street",
+    autoComplete: "street",
+    isRequired: true,
+    placeholder: "Street",
+  },
+  {
+    labelText: "locality",
+    id: "locality",
+    name: "locality",
+    type: "locality",
+    autoComplete: "locality",
+    isRequired: true,
+    placeholder: "Locality",
+  },
+  {
+    labelText: "landmark",
+    id: "landmark",
+    name: "landmark",
+    type: "landmark",
+    autoComplete: "landmark",
+    isRequired: true,
+    placeholder: "Landmark",
+  },
+  {
+    labelText: "city",
+    id: "city",
+    name: "city",
+    type: "city",
+    autoComplete: "city",
+    isRequired: true,
+    placeholder: "City",
+  },
+  {
+    labelText: "state",
+    id: "state",
+    name: "state",
+    type: "state",
+    autoComplete: "state",
+    isRequired: true,
+    placeholder: "State",
+  },
+  {
+    labelText: "pincode",
+    id: "pincode",
+    name: "pincode",
+    type: "pincode",
+    autoComplete: "pincode",
+    isRequired: true,
+    placeholder: "Pincode",
+  },
+];
+
+export { loginFields, signupFields, addressFields };

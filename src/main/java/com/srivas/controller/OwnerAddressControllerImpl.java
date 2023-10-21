@@ -24,10 +24,10 @@ public class OwnerAddressControllerImpl implements IOwnerAddressController {
     @GetMapping("/address/get/{id}")
     public ResponseEntity<JsonResponse<Object>> getAddressByOwnerId(@PathVariable String id) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        AddressModel addressModel = ownerAddressService.getOwnerAddressById(id);
+        AddressModel addressModel = ownerAddressService.getOwnerAddressByOwnerId(id);
 
-        if(Objects.isNull(addressModel.getHouseNumber())) {
-            return new ResponseEntity<>(new JsonResponse<>("address not found", hashMap, true), HttpStatus.NO_CONTENT);
+        if(Objects.isNull(addressModel) || Objects.isNull(addressModel.getHouseNumber())) {
+            return new ResponseEntity<>(new JsonResponse<>("address not found", hashMap, true), HttpStatus.NOT_FOUND);
         }
 
         AddressDto addressDto = AddressDto.createAddress(addressModel);
@@ -56,7 +56,7 @@ public class OwnerAddressControllerImpl implements IOwnerAddressController {
     @PostMapping("/address/get")
     public ResponseEntity<JsonResponse<Object>> addNewProperty(@PathVariable String id) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        AddressModel addressModel = ownerAddressService.getOwnerAddressById(id);
+        AddressModel addressModel = ownerAddressService.getOwnerAddressByOwnerId(id);
 
         return null;
     }

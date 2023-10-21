@@ -28,4 +28,26 @@ const postRequest = async (body, url) => {
   return [response, error];
 };
 
-export { axiosInstance, postRequest };
+const getRequest = async (url, successCode) => {
+  let response;
+  let error;
+  let res = axiosInstance({
+    url: url,
+    method: "GET",
+  });
+
+  await res
+    .then((data) => {
+      if (data["status"] === successCode) {
+        response = data["data"];
+        error = null;
+      }
+    })
+    .catch((err) => {
+      error = err["response"];
+      response = null;
+    });
+  return [response, error];
+};
+
+export { axiosInstance, postRequest, getRequest };

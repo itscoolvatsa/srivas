@@ -31,7 +31,9 @@ const SignIn = () => {
     if (response !== null) {
       dispatch({ type: "LOGIN", payload: response["data"]["owner"] });
     }
-    setError(err["data"]["data"]["error"]);
+    if (err !== null) {
+      setError(err["data"]["data"]["error"]);
+    }
   };
 
   return (
