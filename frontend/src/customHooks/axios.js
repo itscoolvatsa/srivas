@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
-const postRequest = async (body, url) => {
+const postRequest = async (body, url, status) => {
   let response;
   let error;
   let res = axiosInstance({
@@ -16,7 +16,7 @@ const postRequest = async (body, url) => {
 
   await res
     .then((data) => {
-      if (data["status"] === 200) {
+      if (data["status"] === status) {
         response = data["data"];
         error = null;
       }

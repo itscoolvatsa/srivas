@@ -15,7 +15,6 @@ const OwnerHeader = ({ active }) => {
       setPropertyClass("");
       setProfileClass("active");
     }
-    console.log(active);
   }, [active]);
 
   const logout = () => {

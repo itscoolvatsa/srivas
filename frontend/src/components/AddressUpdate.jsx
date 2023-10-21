@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
 import { addressFields } from "../constants/formFields";
+import { postRequest } from "../customHooks/axios";
 
 let fieldState = {};
 
@@ -11,23 +12,40 @@ addressFields.forEach((field) => {
 const leftColumnFields = addressFields.slice(0, 4);
 const rightColumnFields = addressFields.slice(4);
 
-const AddressUpdate = ({ show, setShow }) => {
+const AddressUpdate = ({ show, setShow, id, setAddressUpdate }) => {
   const [addressState, setAddressState] = useState(fieldState);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    console.log(show);
-  }, [show]);
+  const [sucess, setSucess] = useState("");
 
   const handleClose = () => setShow(false);
 
   const handleChange = (e) => {
-    console.log(addressState);
     setAddressState({ ...addressState, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setError("");
+    setSucess("");
     e.preventDefault();
+    let body = {
+      name: addressState["name"],
+      houseNumber: addressState["houseNumber"],
+      street: addressState["street"],
+      locality: addressState["locality"],
+      landmark: addressState["landmark"],
+      city: addressState["city"],
+      state: addressState["state"],
+      pincode: addressState["pincode"],
+    };
+    let url = `/owner/address/update/${id}`;
+    const [response, err] = await postRequest(body, url, 202);
+    if (response !== null) {
+      setAddressUpdate(true);
+      setSucess("address updated successfully!!!");
+    }
+    if (err !== null) {
+      setError(err["data"]["data"]["error"]);
+    }
   };
 
   return (
@@ -85,9 +103,11 @@ const AddressUpdate = ({ show, setShow }) => {
             </div>
           </div>
         </div>
+        <div className="text-danger">{error !== null ? error : null}</div>
+        <div className="text-success">{sucess !== null ? sucess : null}</div>
         <Button className="btn btn-primary m-3" type="submit">
           Save Address
-        </Button>
+        </Button>{" "}
       </Form>
     </Modal>
   );

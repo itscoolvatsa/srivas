@@ -27,7 +27,7 @@ const SignIn = () => {
       password: loginState["password"],
     };
     let url = "/owner/signin";
-    const [response, err] = await postRequest(body, url);
+    const [response, err] = await postRequest(body, url, 200);
     if (response !== null) {
       dispatch({ type: "LOGIN", payload: response["data"]["owner"] });
     }

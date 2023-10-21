@@ -29,7 +29,11 @@ public class OwnerAddressServiceImpl implements IOwnerAddressService{
 
     @Override
     public AddressModel updateOwnerAddress(String id, AddressDto addressDto) {
-        String addressId = ownerRepo.findOwnerById(id).getAddress().getId();
+        OwnerModel ownerModel = ownerRepo.findOwnerById(id);
+        if(ownerModel == null) {
+            return null;
+        }
+        String addressId = ownerModel.getAddress().getId();
 
         if (addressId != null) {
             Optional<AddressModel> existingAddress = addressRepo.findById(addressId);

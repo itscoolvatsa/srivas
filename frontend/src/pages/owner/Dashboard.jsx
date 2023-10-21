@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [owner, setOwner] = useState(null);
   const [address, setAddress] = useState(null);
   const [show, setShow] = useState(false);
+  const [addressUpdate, setAddressUpdate] = useState(false);
 
   const findAddress = async (id) => {
     let url = `/owner/address/get/${id}`;
@@ -38,6 +39,17 @@ const Dashboard = () => {
 
     fetchData();
   }, [ownerState, navigate, id]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (addressUpdate) {
+        await findAddress(id);
+      }
+    };
+
+    fetchData();
+    setAddressUpdate(false);
+  }, [addressUpdate]);
 
   const openUpdateDialog = () => {
     setShow(true);
@@ -65,8 +77,15 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {<AddressUpdate show={show} setShow={setShow} />}
+      {
+        <AddressUpdate
+          show={show}
+          setShow={setShow}
+          id={id}
+          addressUpdate={addressUpdate}
+          setAddressUpdate={setAddressUpdate}
+        />
+      }
     </section>
   );
 };
