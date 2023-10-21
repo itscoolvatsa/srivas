@@ -8,6 +8,4 @@ import com.srivas.model.OwnerModel;
 public interface IOwnerService {
     String createOwner(OwnerSignUpDto ownerSignUpDto);
     OwnerModel signInOwner(String email);
-    AddressModel getOwnerAddressById(String id);
-    AddressModel updateOwnerAddress(String id, AddressDto addressDto);
 }

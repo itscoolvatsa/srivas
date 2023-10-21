@@ -55,4 +55,18 @@ public class AddressDto {
                 .pincode(this.pincode)
                 .build();
     }
+
+    public static AddressDto createAddress(AddressModel addressModel) {
+        return AddressDto
+                .builder()
+                .name(addressModel.getName())
+                .houseNumber(addressModel.getHouseNumber())
+                .street(addressModel.getStreet())
+                .landmark(addressModel.getLandmark())
+                .locality(addressModel.getLocality())
+                .city(addressModel.getCity())
+                .state(addressModel.getState())
+                .pincode(addressModel.getPincode())
+                .build();
+    }
 }
