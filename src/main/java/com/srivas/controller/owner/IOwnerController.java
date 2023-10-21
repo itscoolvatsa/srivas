@@ -1,7 +1,6 @@
-package com.srivas.controller;
+package com.srivas.controller.owner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.srivas.dto.address.AddressDto;
 import com.srivas.dto.owner.OwnerSignInDto;
 import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.util.JsonResponse;

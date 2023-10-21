@@ -2,7 +2,6 @@ package com.srivas.dto.address;
 
 import com.srivas.model.AddressModel;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Field;

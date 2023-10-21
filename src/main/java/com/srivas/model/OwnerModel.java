@@ -13,6 +13,8 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.ArrayList;
+
 @Document(collection = "owner")
 @AllArgsConstructor
 @Builder
@@ -41,4 +43,8 @@ public class OwnerModel {
     @DBRef
     @Null
     private AddressModel address;
+
+    @DBRef
+    @Null
+    private ArrayList<PropertyModel> properties;
 }

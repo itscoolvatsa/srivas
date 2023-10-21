@@ -1,7 +1,6 @@
 package com.srivas.repository;
 
 import com.srivas.model.AddressModel;
-import com.srivas.model.OwnerModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

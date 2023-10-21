@@ -1,14 +1,12 @@
-package com.srivas.controller;
+package com.srivas.controller.owner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.srivas.dto.address.AddressDto;
 import com.srivas.dto.owner.OwnerResponseDto;
 import com.srivas.dto.owner.OwnerSignInDto;
 import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.exception.ErrorsEnum;
-import com.srivas.model.AddressModel;
 import com.srivas.model.OwnerModel;
-import com.srivas.service.OwnerServiceImpl;
+import com.srivas.service.owner.OwnerServiceImpl;
 import com.srivas.util.JsonResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

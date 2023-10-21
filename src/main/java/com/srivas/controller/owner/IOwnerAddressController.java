@@ -1,4 +1,4 @@
-package com.srivas.controller;
+package com.srivas.controller.owner;
 
 import com.srivas.dto.address.AddressDto;
 import com.srivas.util.JsonResponse;

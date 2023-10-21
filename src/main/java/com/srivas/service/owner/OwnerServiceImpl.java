@@ -1,6 +1,5 @@
-package com.srivas.service;
+package com.srivas.service.owner;
 
-import com.srivas.dto.address.AddressDto;
 import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.model.AddressModel;
 import com.srivas.model.OwnerModel;
@@ -8,8 +7,6 @@ import com.srivas.repository.IAddressRepo;
 import com.srivas.repository.IOwnerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class OwnerServiceImpl implements IOwnerService {

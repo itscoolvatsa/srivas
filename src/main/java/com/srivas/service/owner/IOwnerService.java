@@ -1,8 +1,6 @@
-package com.srivas.service;
+package com.srivas.service.owner;
 
-import com.srivas.dto.address.AddressDto;
 import com.srivas.dto.owner.OwnerSignUpDto;
-import com.srivas.model.AddressModel;
 import com.srivas.model.OwnerModel;
 
 public interface IOwnerService {
