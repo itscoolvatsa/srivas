@@ -1,4 +1,4 @@
-package com.srivas.service.owner;
+package com.srivas.service.address;
 
 import com.srivas.dto.address.AddressDto;
 import com.srivas.model.AddressModel;

@@ -2,7 +2,7 @@ package com.srivas.controller.owner;
 
 import com.srivas.dto.address.AddressDto;
 import com.srivas.model.AddressModel;
-import com.srivas.service.owner.OwnerAddressServiceImpl;
+import com.srivas.service.address.OwnerAddressServiceImpl;
 import com.srivas.util.JsonResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
