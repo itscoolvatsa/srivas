@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @Service
 public class OwnerPropertyService implements IOwnerPropertyService {
@@ -29,21 +30,30 @@ public class OwnerPropertyService implements IOwnerPropertyService {
         PropertyDto propertyDto = addPropertyDto.getPropertyDto();
         AddressDto addressDto = addPropertyDto.getAddressDto();
 
-        OwnerModel ownerModel = ownerRepo.findOwnerById(id);
-        ArrayList<PropertyModel> properties = ownerModel.getProperties();
+        Optional<OwnerModel> existingOwner = ownerRepo.findById(id);
+        OwnerModel updatedOwnerModel = existingOwner.get();
+        ArrayList<PropertyModel> properties = updatedOwnerModel.getProperties();
 
-        if(properties == null) {
+        if (properties == null) {
             properties = new ArrayList<>();
         }
 
         PropertyModel propertyModel = propertyDto.createModel();
         AddressModel addressModel = addressDto.createAddress();
-
         addressModel = addressRepo.save(addressModel);
         propertyModel.setAddress(addressModel);
-        properties.add(propertyModel);
-        ownerRepo.save(ownerModel);
 
-        return propertyRepo.save(propertyModel);
+        propertyModel = propertyRepo.save(propertyModel);
+        properties.add(propertyModel);
+        updatedOwnerModel.setProperties(properties);
+        ownerRepo.save(updatedOwnerModel);
+        return propertyModel;
+    }
+
+    @Override
+    public ArrayList<PropertyModel> getPropertiesByOwnerId(String id) {
+        OwnerModel ownerModel = ownerRepo.findOwnerById(id);
+        ArrayList<PropertyModel> properties = ownerModel.getProperties();
+        return properties;
     }
 }

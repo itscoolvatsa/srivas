@@ -10,4 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface IOwnerPropertyController {
     ResponseEntity<JsonResponse<Object>> createPropertyByOwnerId(@PathVariable String id,
                                                                  @Valid @RequestBody AddPropertyDto addPropertyDto);
-}
+    public ResponseEntity<JsonResponse<Object>> getPropertiesByOwnerId(@PathVariable String id);
+    }

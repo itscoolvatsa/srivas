@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Form, Button, Modal } from "react-bootstrap";
-import { addressFields } from "../constants/formFields";
-import { postRequest } from "../customHooks/axios";
+import { addressFields } from "../../constants/formFields";
+import { postRequest } from "../../customHooks/axios";
 
 let fieldState = {};
 

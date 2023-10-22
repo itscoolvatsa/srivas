@@ -1,10 +1,7 @@
 package com.srivas.model;
 
 import jakarta.validation.constraints.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -18,6 +15,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
+@ToString
 public class PropertyModel {
     @Id
     private String id;

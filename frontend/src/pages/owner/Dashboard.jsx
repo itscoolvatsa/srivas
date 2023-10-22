@@ -3,8 +3,8 @@ import { OwnerContext } from "../../customHooks/OwnerContext";
 import { useNavigate, useParams } from "react-router-dom";
 import OwnerHeader from "../../components/owner/OwnerHeader";
 import { getRequest } from "../../customHooks/axios";
-import Address from "../../components/Address";
-import AddressUpdate from "../../components/AddressUpdate";
+import Address from "../../components/owner/Address";
+import AddressUpdate from "../../components/owner/AddressUpdate";
 
 const Dashboard = () => {
   const { ownerState } = useContext(OwnerContext);
@@ -57,7 +57,7 @@ const Dashboard = () => {
 
   return (
     <section>
-      <OwnerHeader active={"profile"} />
+      <OwnerHeader active={"profile"} id={id} />
       <div className="card text-center">
         <div className="card-header">
           Hello, {owner !== null && owner.name !== null ? owner["name"] : ""}

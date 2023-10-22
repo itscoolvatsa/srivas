@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { OwnerContext } from "../../customHooks/OwnerContext";
+import { Link } from "react-router-dom";
 
-const OwnerHeader = ({ active }) => {
+const OwnerHeader = ({ active, id }) => {
   const { dispatch } = useContext(OwnerContext);
   const [propertyClass, setPropertyClass] = useState("");
   const [profileClass, setProfileClass] = useState("");
@@ -29,22 +30,22 @@ const OwnerHeader = ({ active }) => {
         <div className="d-flex" id="navbarNav">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <a
+              <Link
+                to={`/owner/property/${id}`}
                 className={`nav-link ${propertyClass}`}
                 aria-current="page"
-                href="#"
               >
                 Properties
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a
+              <Link
+                to={`/owner/dashboard/${id}`}
                 className={`nav-link ${profileClass}`}
                 aria-current="page"
-                href="#"
               >
                 Profile
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="btn nav-link" aria-current="page" onClick={logout}>
