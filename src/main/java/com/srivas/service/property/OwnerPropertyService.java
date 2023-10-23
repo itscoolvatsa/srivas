@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -42,6 +43,7 @@ public class OwnerPropertyService implements IOwnerPropertyService {
         AddressModel addressModel = addressDto.createAddress();
         addressModel = addressRepo.save(addressModel);
         propertyModel.setAddress(addressModel);
+        propertyModel.setPostedOn(new Date());
 
         propertyModel = propertyRepo.save(propertyModel);
         properties.add(propertyModel);

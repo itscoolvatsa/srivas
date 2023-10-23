@@ -34,7 +34,7 @@ public class OwnerPropertyController implements IOwnerPropertyController {
             return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.USER_DOES_NOT_EXISTS, hashMap, false), HttpStatus.BAD_REQUEST);
         }
         hashMap.put("property", propertyModel);
-        return new ResponseEntity<>(new JsonResponse<>("Property Added Successfully", hashMap, true), HttpStatus.OK);
+        return new ResponseEntity<>(new JsonResponse<>("Property Added Successfully", hashMap, true), HttpStatus.CREATED);
     }
 
     @Override
@@ -49,6 +49,6 @@ public class OwnerPropertyController implements IOwnerPropertyController {
         }
         hashMap.put("properties", properties);
         return new ResponseEntity<>(new JsonResponse<>("", hashMap, true),
-                HttpStatus.BAD_REQUEST);
+                HttpStatus.OK);
     }
 }

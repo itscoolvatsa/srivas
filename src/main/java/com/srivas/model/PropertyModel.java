@@ -71,9 +71,14 @@ public class PropertyModel {
     @Max(value = 100, message = "Floor cannot be more 100")
     private int floor;
 
+    @Field("shortdescription")
+    @NotNull(message = "Short description field should not be empty")
+    @Size(min = 4, max = 128, message = "Short description should be between 6 to 128 characters")
+    private String shortDescription;
+
     @Field("description")
     @NotNull(message = "Description field should not be empty")
-    @Size(min = 4, max = 32, message = "Description should be between 4 to 32 characters")
+    @Size(min = 4, max = 256, message = "Description should be between 4 to 256 characters")
     private String description;
 
     @DBRef

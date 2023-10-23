@@ -47,9 +47,6 @@ public class PropertyDto {
     @NotNull(message = "Parking Status field should not be empty")
     private ArrayList<String> parking; // Parking availability (String: Car, Bike, No-Parking)
 
-    @Field("postedOn")
-    private Date postedOn;
-
     @Field("furnishingStatus")
     @NotNull(message = "Furnishing Status field should not be empty")
     private boolean furnishingStatus;
@@ -70,9 +67,14 @@ public class PropertyDto {
     @Max(value = 100, message = "Floor cannot be more 100")
     private int floor;
 
+    @Field("shortdescription")
+    @NotNull(message = "Short description field should not be empty")
+    @Size(min = 4, max = 128, message = "Short description should be between 6 to 128 characters")
+    private String shortDescription;
+
     @Field("description")
     @NotNull(message = "Description field should not be empty")
-    @Size(min = 4, max = 32, message = "Description should be between 4 to 32 characters")
+    @Size(min = 4, max = 256, message = "Description should be between 4 to 256 characters")
     private String description;
 
     public PropertyModel createModel() {
@@ -83,11 +85,11 @@ public class PropertyDto {
                 .areaSqFt(this.getAreaSqFt())
                 .bedroom(this.getBedroom())
                 .parking(this.getParking())
-                .postedOn(this.getPostedOn())
                 .furnishingStatus(this.isFurnishingStatus())
                 .bathroom(this.getBathroom())
                 .gatedSecurity(this.isGatedSecurity())
                 .floor(this.getFloor())
+                .shortDescription(this.getShortDescription())
                 .description(this.getDescription())
                 .build();
     }
