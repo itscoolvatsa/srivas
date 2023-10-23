@@ -144,4 +144,109 @@ const addressFields = [
   },
 ];
 
-export { loginFields, signupFields, addressFields };
+const propertyFields = [
+  {
+    labelText: "Title",
+    id: "shortDescription",
+    name: "shortDescription",
+    type: "text",
+    autoComplete: "shortDescription",
+    isRequired: true,
+    placeholder: "Title",
+  },
+  {
+    labelText: "Rent",
+    id: "rent",
+    name: "rent",
+    type: "rent",
+    autoComplete: "rent",
+    isRequired: true,
+    placeholder: "Rent",
+  },
+  {
+    labelText: "Deposit",
+    id: "deposit",
+    name: "deposit",
+    type: "deposit",
+    autoComplete: "deposit",
+    isRequired: true,
+    placeholder: "Deposit",
+  },
+  {
+    labelText: "AreaSqFt",
+    id: "areaSqFt",
+    name: "areaSqFt",
+    type: "areaSqFt",
+    autoComplete: "areaSqFt",
+    isRequired: true,
+    placeholder: "Area Sq. Ft.",
+  },
+  {
+    labelText: "Bedroom",
+    id: "bedroom",
+    name: "bedroom",
+    type: "bedroom",
+    autoComplete: "bedroom",
+    isRequired: true,
+    placeholder: "Bedroom",
+  },
+  {
+    labelText: "Bathroom",
+    id: "bathroom",
+    name: "bathroom",
+    type: "bathroom",
+    autoComplete: "bathroom",
+    isRequired: true,
+    placeholder: "Bathroom",
+  },
+  {
+    labelText: "Description",
+    id: "description",
+    name: "description",
+    type: "text",
+    autoComplete: "description",
+    isRequired: true,
+    placeholder: "Description",
+  },
+];
+
+const propertyFieldsButtons = [
+  {
+    labelText: "Furnishing Status",
+    id: "furnishingStatus",
+    name: "furnishingStatus",
+    type: "radio",
+    autoComplete: "furnishingStatus",
+    isRequired: true,
+    placeholder: "Furnishing Status",
+  },
+  {
+    labelText: "Gated Security",
+    id: "gatedSecurity",
+    name: "gatedSecurity",
+    type: "radio",
+    autoComplete: "gatedSecurity",
+    isRequired: true,
+    placeholder: "Gated Security",
+  },
+  {
+    labelText: "Parking",
+    id: "parking",
+    name: "parking",
+    type: "checkbox",
+    options: [
+      { value: "car", label: "Car" },
+      { value: "bike", label: "Bike" },
+    ],
+    isRequired: false,
+    placeholder: "Parking",
+  },
+];
+
+export {
+  loginFields,
+  signupFields,
+  addressFields,
+  propertyFields,
+  propertyFieldsButtons,
+};
