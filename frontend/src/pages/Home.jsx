@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropertyCard from "../components/PropertyCard";
 import { getRequest } from "../customHooks/axios";
+import Header from "../components/Header";
 
 const Home = () => {
   const [properties, setProperties] = useState(null);
@@ -21,6 +22,7 @@ const Home = () => {
 
   return (
     <div>
+      <Header />
       {properties !== null
         ? properties.map((property, index) => (
             <PropertyCard key={index} property={property} userType={false} />

@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface IProperty {
     public List<PropertyModel> getProperties();
+    public PropertyModel getProperty(String id);
 }

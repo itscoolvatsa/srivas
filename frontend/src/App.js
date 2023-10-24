@@ -6,6 +6,7 @@ import { CustomerProvider } from "./customHooks/CustomerContext";
 import Dashboard from "./pages/owner/Dashboard";
 import Properties from "./pages/owner/Properties";
 import Home from "./pages/Home";
+import Property from "./pages/Property";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       <CustomerProvider>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/property/:id" element={<Property />} />
         </Routes>
       </CustomerProvider>
     </BrowserRouter>

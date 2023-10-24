@@ -1,8 +1,10 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 const PropertyCard = ({ property, owner, userType }) => {
   const {
+    id,
     rent,
     deposit,
     areaSqFt,
@@ -14,6 +16,12 @@ const PropertyCard = ({ property, owner, userType }) => {
     postedOn,
   } = property;
   const { houseNumber, street, locality, landmark, city } = property.address;
+
+  const navigate = useNavigate();
+  const openProperty = () => {
+    navigate(`/property/${id}`);
+  };
+
   return (
     <Card className="text-center rounded-0 mb-4">
       <Card.Header className="ps-5">
@@ -104,7 +112,10 @@ const PropertyCard = ({ property, owner, userType }) => {
                       </button>
                     </>
                   ) : (
-                    <button className="btn btn-primary align-self-end mt-3">
+                    <button
+                      className="btn btn-primary align-self-end mt-3"
+                      onClick={openProperty}
+                    >
                       View Property
                     </button>
                   )}
@@ -115,7 +126,7 @@ const PropertyCard = ({ property, owner, userType }) => {
         </Card.Text>
       </Card.Body>
       <Card.Footer className="text-muted">
-        {new Date(postedOn).toLocaleString()}
+        Listed On: {new Date(postedOn).toLocaleString()}
       </Card.Footer>
     </Card>
   );

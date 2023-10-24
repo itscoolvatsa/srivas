@@ -16,4 +16,7 @@ public class PropertyImpl implements IProperty {
     public List<PropertyModel> getProperties() {
         return propertyRepo.findAll();
     }
+    public PropertyModel getProperty(String id) {
+        return propertyRepo.findById(id).get();
+    }
 }
