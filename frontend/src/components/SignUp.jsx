@@ -13,7 +13,7 @@ signupFields.forEach((field) => {
 const SignUp = () => {
   const [signUpState, setSignUpState] = useState(fieldState);
   const [error, setError] = useState("");
-  const { dispatch } = useContext(OwnerContext);
+  const { ownerState, dispatch } = useContext(OwnerContext);
 
   const handleChange = (e) => {
     setSignUpState({ ...signUpState, [e.target.id]: e.target.value });
@@ -23,10 +23,10 @@ const SignUp = () => {
     setError("");
     e.preventDefault();
 
-    // if (setSignUpState["password"] !== signUpState["confirmPassword"]) {
-    //   setError(["password do not match"]);
-    //   return;
-    // }
+    if (signUpState["password"] !== signUpState["confirmPassword"]) {
+      setError(["password do not match"]);
+      return;
+    }
 
     let body = {
       name: signUpState["name"],
@@ -35,11 +35,14 @@ const SignUp = () => {
       mobile: signUpState["mobile"],
     };
     let url = "/owner/signup";
-    const [response, err] = await postRequest(body, url, 200);
+    const [response, err] = await postRequest(body, url, 201);
+
     if (response !== null) {
       dispatch({ type: "LOGIN", payload: response["data"]["owner"] });
     }
-    setError(err["data"]["data"]["error"]);
+    if (err !== null) {
+      setError(err["data"]["data"]["error"]);
+    }
   };
 
   return (

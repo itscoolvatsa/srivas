@@ -27,15 +27,22 @@ public class OwnerControllerImpl implements IOwnerController {
     @Override
     @PostMapping("/signup")
     public ResponseEntity<JsonResponse<Object>> createOwner(@Valid @RequestBody OwnerSignUpDto ownerSignUpDto) {
-        String id = ownerService.createOwner(ownerSignUpDto);
+        OwnerModel ownerModel = ownerService.createOwner(ownerSignUpDto);
         HashMap<String, Object> hashMap = new HashMap<>();
 
-        if (id == null) {
+        if (ownerModel == null) {
             hashMap.put("error", "user already exists");
             return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.USER_ALREADY_EXISTS, hashMap, false), HttpStatus.BAD_REQUEST);
         }
 
-        hashMap.put("user", ownerSignUpDto.toString());
+        OwnerResponseDto ownerResponseDto = OwnerResponseDto
+                .builder()
+                .id(ownerModel.getId())
+                .name(ownerModel.getName())
+                .email(ownerModel.getEmail())
+                .build();
+
+        hashMap.put("owner", ownerResponseDto);
         return new ResponseEntity<>(new JsonResponse<>("owner created", hashMap, true), HttpStatus.CREATED);
     }
 

@@ -16,11 +16,10 @@ public class OwnerServiceImpl implements IOwnerService {
     private IAddressRepo addressRepo;
 
     @Override
-    public String createOwner(OwnerSignUpDto ownerSignUpDto) {
+    public OwnerModel createOwner(OwnerSignUpDto ownerSignUpDto) {
         OwnerModel ownerModel = ownerSignUpDto.createOwner();
         OwnerModel count = ownerRepo.findOwnerByEmail(ownerModel.getEmail());
         if (count != null) {
-            System.out.println(count.getEmail());
             return null;
         }
 
@@ -28,8 +27,7 @@ public class OwnerServiceImpl implements IOwnerService {
         ownerModel.setAddress(addressModel);
 
         return ownerRepo
-                .save(ownerModel)
-                .getId();
+                .save(ownerModel);
     }
 
     @Override

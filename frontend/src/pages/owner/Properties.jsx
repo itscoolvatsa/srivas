@@ -10,7 +10,7 @@ const Properties = () => {
   const { ownerState } = useContext(OwnerContext);
   const navigate = useNavigate();
   let { id } = useParams();
-  const [setOwner] = useState(null);
+  const [owner, setOwner] = useState(null);
   const [properties, setProperties] = useState(null);
   const [setPropertyAddedState] = useState(false);
   const [show, setShow] = useState(false);

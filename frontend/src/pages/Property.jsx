@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getRequest } from "../customHooks/axios";
 import { Card, Carousel } from "react-bootstrap";
-import Header from "../components/Header";
+import CustomerHeader from "../components/customer/CustomerHeader";
 
 const Property = () => {
   const [property, setProperty] = useState(null);
@@ -36,7 +36,7 @@ const Property = () => {
 
   return (
     <div>
-      <Header />
+      <CustomerHeader />
       <div className="container">
         {property !== null && address !== null ? (
           <div>
@@ -189,22 +189,3 @@ const Property = () => {
 };
 
 export default Property;
-
-// "data": {
-//   "property": {
-//       "id": "65360457e0168637d1110f9c",
-//       "postedOn": "2023-10-16T00:00:00.000+00:00",
-//       "description": "A beautiful apartmen",
-//       "address": {
-//           "id": "65360457e0168637d1110f9b",
-//           "name": "John Doe 1",
-//           "houseNumber": "12356 Main St",
-//           "street": "Downtown Avenue",
-//           "locality": "Central District",
-//           "landmark": "City Park",
-//           "city": "Big City",
-//           "state": "CAali",
-//           "pincode": "12345"
-//       }
-//   }
-// },
