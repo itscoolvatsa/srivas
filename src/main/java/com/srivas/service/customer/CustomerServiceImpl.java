@@ -1,9 +1,7 @@
 package com.srivas.service.customer;
 
 import com.srivas.dto.customer.CustomerDto;
-import com.srivas.dto.owner.OwnerSignUpDto;
 import com.srivas.model.CustomerModel;
-import com.srivas.model.OwnerModel;
 import com.srivas.repository.ICustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,12 +14,19 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public String createCustomer(CustomerDto customerDto) {
         CustomerModel customerModel = customerDto.createCustomerModel();
-        CustomerModel count = customerRepo.findOwnerByEmail(customerModel.getEmail());
+        CustomerModel count = customerRepo.findCustomerByEmail(customerModel.getEmail());
 
         if (count != null) {
             return null;
         }
 
-        return customerRepo.save(customerDto.createCustomerModel()).getId();
+        return customerRepo
+                .save(customerDto.createCustomerModel())
+                .getId();
+    }
+
+    @Override
+    public CustomerModel signInCustomer(String customerEmail) {
+        return customerRepo.findCustomerByEmail(customerEmail);
     }
 }

@@ -41,7 +41,7 @@ const SignUpCustomer = ({ signUpShow, setSignUpShow }) => {
     let url = "/customer/add";
     const [response, err] = await postRequest(body, url, 201);
     if (response !== null) {
-      dispatch({ type: "LOGIN", payload: response["data"]["user"] });
+      dispatch({ type: "LOGIN", payload: response["data"]["customer"] });
       setSignUpShow(false);
     }
     if (err !== null) {

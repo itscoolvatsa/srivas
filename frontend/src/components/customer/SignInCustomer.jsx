@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { loginFields } from "../../constants/formFields";
 import { Button, Form, Modal } from "react-bootstrap";
+import { postRequest } from "../../customHooks/axios";
+import { CustomerContext } from "../../customHooks/CustomerContext";
 
 let fieldState = {};
 
@@ -9,6 +11,7 @@ loginFields.forEach((field) => {
 });
 
 const SignInCustomer = ({ signInShow, setSignInShow }) => {
+  const { customerState, dispatch } = useContext(CustomerContext);
   const [signInState, setSignInState] = useState(fieldState);
   const [error, setError] = useState(null);
 
@@ -20,7 +23,24 @@ const SignInCustomer = ({ signInShow, setSignInShow }) => {
     setSignInShow(false);
   };
 
-  const signInFormSubmission = () => {};
+  const signInFormSubmission = async (e) => {
+    setError("");
+    e.preventDefault();
+
+    let body = {
+      email: signInState["email"],
+      password: signInState["password"],
+    };
+    let url = "/customer/signin";
+    const [response, err] = await postRequest(body, url, 200);
+    if (response !== null) {
+      dispatch({ type: "LOGIN", payload: response["data"]["customer"] });
+      setSignInShow(false);
+    }
+    if (err !== null) {
+      setError(err["data"]["data"]["error"]);
+    }
+  };
 
   return (
     <Modal show={signInShow} onHide={handleClose}>

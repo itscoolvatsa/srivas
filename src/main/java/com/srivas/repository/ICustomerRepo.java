@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.Query;
 
 public interface ICustomerRepo extends MongoRepository<CustomerModel, String> {
     @Query("{email:'?0'}")
-    CustomerModel findOwnerByEmail(String email);
+    CustomerModel findCustomerByEmail(String email);
 }
