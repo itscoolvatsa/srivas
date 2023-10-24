@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Owner from "./pages/owner/Owner";
-import { OwnerContext, OwnerProvider } from "./customHooks/OwnerContext";
+import { OwnerProvider } from "./customHooks/OwnerContext";
+import { CustomerProvider } from "./customHooks/CustomerContext";
 import Dashboard from "./pages/owner/Dashboard";
 import Properties from "./pages/owner/Properties";
+import Home from "./pages/Home";
 
 const App = () => {
   return (
@@ -16,6 +18,11 @@ const App = () => {
           <Route path="/owner/*" element={<Navigate to="/owner" />} />
         </Routes>
       </OwnerProvider>
+      <CustomerProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </CustomerProvider>
     </BrowserRouter>
   );
 };

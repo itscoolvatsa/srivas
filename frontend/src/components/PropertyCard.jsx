@@ -1,7 +1,7 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-const PropertyCard = ({ property }) => {
+const PropertyCard = ({ property, owner, userType }) => {
   const {
     rent,
     deposit,
@@ -11,12 +11,13 @@ const PropertyCard = ({ property }) => {
     furnishingStatus,
     gatedSecurity,
     floor,
+    postedOn,
   } = property;
   const { houseNumber, street, locality, landmark, city } = property.address;
   return (
-    <Card className="text-center rounded-0">
+    <Card className="text-center rounded-0 mb-4">
       <Card.Header className="ps-5">
-        <div class="text-start">
+        <div className="text-start">
           <div>{shortDescription}</div>
           <div>
             {`${houseNumber}, ${street}, ${locality}, ${landmark}, ${city}`}
@@ -25,17 +26,17 @@ const PropertyCard = ({ property }) => {
       </Card.Header>
       <Card.Body className="list-group list-group-flush pt-2">
         <Card.Title className="list-group-item">
-          <div class="row fs-6">
-            <div class="col-md-4 border-end">
+          <div className="row fs-6">
+            <div className="col-md-4 border-end">
               {"\u20B9 " + rent}
               <br />
               <span className="text-body-tertiary">Rent</span>
             </div>
-            <div class="col-md-4 border-end">
+            <div className="col-md-4 border-end">
               {deposit} <br />
               <span className="text-body-tertiary">Deposit</span>
             </div>
-            <div class="col-md-4">
+            <div className="col-md-4">
               {areaSqFt} sqft. <br />
               <span className="text-body-tertiary">Area</span>
             </div>
@@ -93,16 +94,29 @@ const PropertyCard = ({ property }) => {
                       </div>
                     </div>
                   </div>
-                  <button className="btn btn-primary align-self-end mt-3">
-                    Update Property
-                  </button>
+                  {userType ? (
+                    <>
+                      <button className="btn btn-primary align-self-end mt-3 me-3">
+                        View Property
+                      </button>
+                      <button className="btn btn-primary align-self-end mt-3 ms-3">
+                        Update Property
+                      </button>
+                    </>
+                  ) : (
+                    <button className="btn btn-primary align-self-end mt-3">
+                      View Property
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </Card.Text>
       </Card.Body>
-      <Card.Footer className="text-muted">2 days ago</Card.Footer>
+      <Card.Footer className="text-muted">
+        {new Date(postedOn).toLocaleString()}
+      </Card.Footer>
     </Card>
   );
 };

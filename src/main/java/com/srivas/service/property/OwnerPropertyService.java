@@ -58,4 +58,5 @@ public class OwnerPropertyService implements IOwnerPropertyService {
         ArrayList<PropertyModel> properties = ownerModel.getProperties();
         return properties;
     }
+
 }

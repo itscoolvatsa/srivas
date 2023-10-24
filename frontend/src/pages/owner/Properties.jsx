@@ -10,17 +10,16 @@ const Properties = () => {
   const { ownerState } = useContext(OwnerContext);
   const navigate = useNavigate();
   let { id } = useParams();
-  const [owner, setOwner] = useState(null);
+  const [setOwner] = useState(null);
   const [properties, setProperties] = useState(null);
-  const [propertyAddedState, setPropertyAddedState] = useState(false);
+  const [setPropertyAddedState] = useState(false);
   const [show, setShow] = useState(false);
-  const [addressAvailable, setAddressAvailable] = useState(false);
 
   const findProperties = async () => {
     const url = `/owner/property/get/${id}`;
     const successCode = 200;
 
-    const [response, error] = await getRequest(url, successCode);
+    const [response] = await getRequest(url, successCode);
     if (response != null) {
       setProperties(response["data"]["properties"]);
     }
@@ -66,23 +65,25 @@ const Properties = () => {
   return (
     <div>
       <OwnerHeader active={"property"} id={id} />
-      <div className="p-4 d-flex align-items-center justify-content-between border-bottom">
-        <div>Properties You have Published:</div>
-        <button className="btn btn-primary" onClick={openUpdateDialog}>
-          Add Property
-        </button>
+      <div className="container">
+        <div className="py-4 d-flex align-items-center justify-content-between border-bottom">
+          <div>Properties You have Published:</div>
+          <button className="btn btn-primary" onClick={openUpdateDialog}>
+            Add Property
+          </button>
+        </div>
+        {properties !== null
+          ? properties.map((property, index) => (
+              <PropertyCard key={index} property={property} userType={true} />
+            ))
+          : "You don't have any property"}
+        <AddProperty
+          id={id}
+          show={show}
+          setShow={setShow}
+          setPropertyAddedState={setPropertyAddedState}
+        />
       </div>
-      {properties !== null
-        ? properties.map((property, index) => (
-            <PropertyCard key={index} property={property} />
-          ))
-        : "You don't have any property"}
-      <AddProperty
-        id={id}
-        show={show}
-        setShow={setShow}
-        setPropertyAddedState={setPropertyAddedState}
-      />
     </div>
   );
 };
