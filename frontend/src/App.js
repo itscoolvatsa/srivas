@@ -7,6 +7,7 @@ import Dashboard from "./pages/owner/Dashboard";
 import Properties from "./pages/owner/Properties";
 import Home from "./pages/Home";
 import Property from "./pages/Property";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/property/:id" element={<Property />} />
+          <Route path="/customer/profile/:id" element={<Profile />} />
+          <Route path="/customer/*" element={<Home />} />
         </Routes>
       </CustomerProvider>
     </BrowserRouter>

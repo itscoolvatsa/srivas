@@ -31,28 +31,15 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
   const [step, setStep] = useState(1);
   const [furnishingStatus, setFurnishingStatus] = useState("true");
   const [gatedSecurity, setGatedSecurity] = useState("true");
-  const [selectedParkingOptions, setSelectedParkingOptions] = useState([]);
+  const [selectedParkingOptions, setSelectedParkingOptions] = useState(
+    new Array()
+  );
   const [sucess, setSucess] = useState("");
 
   const handleClose = () => setShow(false);
 
-  // @TODO
   const nextStep = () => {
-    setError("");
-    const requiredFields = propertyFields
-      .concat(propertyFieldsButtons)
-      .filter((field) => field.isRequired)
-      .map((field) => field.id);
-
-    const isStep1FieldsFilled = requiredFields.every(
-      (fieldId) => propertyState[fieldId] !== ""
-    );
-
-    if (isStep1FieldsFilled) {
-      setStep(step + 1);
-    } else {
-      setError("Please fill in all required fields");
-    }
+    setStep(step + 1);
   };
 
   const prevStep = () => {
@@ -69,15 +56,18 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
 
   const handleParkingChange = (e) => {
     const optionValue = e.target.value;
+    const isChecked = e.target.checked;
+
     setSelectedParkingOptions((prevOptions) => {
-      if (e.target.checked) {
-        if (!prevOptions.includes(optionValue)) {
-          return [...prevOptions, optionValue];
-        }
+      const updatedOptions = new Set(prevOptions);
+
+      if (isChecked) {
+        updatedOptions.add(optionValue);
       } else {
-        return prevOptions.filter((item) => item !== optionValue);
+        updatedOptions.delete(optionValue);
       }
-      return prevOptions;
+
+      return Array.from(updatedOptions);
     });
   };
 
@@ -98,20 +88,6 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
 
   const handleSubmit = async (e) => {
     setError("");
-    const requiredFields = addressFields
-      .filter((field) => field.isRequired)
-      .map((field) => field.id);
-
-    const isStep2FieldsFilled = requiredFields.every(
-      (fieldId) => propertyState[fieldId] !== ""
-    );
-
-    if (isStep2FieldsFilled !== null) {
-      setError("Please fill in all required fields");
-      return;
-    }
-    e.preventDefault();
-    setError("");
     e.preventDefault();
 
     let body = {
@@ -119,11 +95,11 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
         name: addressState["name"],
         houseNumber: addressState["houseNumber"],
         street: addressState["street"],
-        locality: addressState[""],
-        landmark: addressState[""],
-        city: addressState[""],
-        state: addressState[""],
-        pincode: addressState[""],
+        locality: addressState["locality"],
+        landmark: addressState["landmark"],
+        city: addressState["city"],
+        state: addressState["state"],
+        pincode: addressState["pincode"],
       },
       propertyDto: {
         rent: propertyState["rent"],
@@ -145,12 +121,11 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
     if (response !== null) {
       setPropertyAddedState(true);
       setSucess("property added successfully!!!");
+      handleClose();
     }
     if (err !== null) {
       setError(err["data"]["data"]["error"]);
     }
-
-    console.log(body);
   };
 
   return (
@@ -182,6 +157,7 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                           autoComplete={field.autoComplete}
                           name={field.name}
                           required={field.isRequired}
+                          value={propertyState[field.id]}
                         />
                       </Form.Group>
                     ))}
@@ -203,12 +179,30 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                           autoComplete={field.autoComplete}
                           name={field.name}
                           required={field.isRequired}
+                          value={propertyState[field.id]}
                         />
                       </Form.Group>
                     ))}
                   </div>
                 </div>
                 {/* Taking Long Description Input */}
+                <Form.Group
+                  key={propertyFields[7].id}
+                  className="mb-3"
+                  controlId={propertyFields[7].id}
+                >
+                  <Form.Label>{propertyFields[7].placeholder} :</Form.Label>
+                  <Form.Control
+                    className="p-2"
+                    onChange={handlePropertyChange}
+                    type={propertyFields[7].type}
+                    placeholder={propertyFields[7].placeholder}
+                    autoComplete={propertyFields[7].autoComplete}
+                    name={propertyFields[7].name}
+                    required={propertyFields[7].isRequired}
+                    value={propertyState[propertyFields[7].id]}
+                  />
+                </Form.Group>
                 <Form.Group
                   key={propertyFields[6].id}
                   className="mb-3"
@@ -223,6 +217,7 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                     autoComplete={propertyFields[6].autoComplete}
                     name={propertyFields[6].name}
                     required={propertyFields[6].isRequired}
+                    value={propertyState[propertyFields[6].id]}
                   />
                 </Form.Group>
 
@@ -332,6 +327,7 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                           autoComplete={field.autoComplete}
                           name={field.name}
                           required={field.isRequired}
+                          value={addressState[field.id]}
                         />
                       </Form.Group>
                     ))}
@@ -353,6 +349,7 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                           autoComplete={field.autoComplete}
                           name={field.name}
                           required={field.isRequired}
+                          value={addressState[field.id]}
                         />
                       </Form.Group>
                     ))}

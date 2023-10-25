@@ -12,7 +12,7 @@ const Properties = () => {
   let { id } = useParams();
   const [owner, setOwner] = useState(null);
   const [properties, setProperties] = useState(null);
-  const [setPropertyAddedState] = useState(false);
+  const [propertyAddedState, setPropertyAddedState] = useState(false);
   const [show, setShow] = useState(false);
 
   const findProperties = async () => {
@@ -26,7 +26,6 @@ const Properties = () => {
   };
 
   const findAddress = async (id) => {
-    console.log(id);
     let url = `/owner/address/get/${id}`;
     let successCode = 200;
     const [response, err] = await getRequest(url, successCode);
