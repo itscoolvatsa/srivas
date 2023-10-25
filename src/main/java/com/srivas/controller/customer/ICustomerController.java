@@ -12,4 +12,5 @@ public interface ICustomerController {
     public ResponseEntity<JsonResponse<Object>> signInCustomer(CustomerSignInDto customerSignInDto);
     public ResponseEntity<JsonResponse<Object>> addPackageByCustomerId(String id, PackageDto packageDto);
     public ResponseEntity<JsonResponse<Object>> getPackageByCustomerId(String id);
+    public ResponseEntity<JsonResponse<Object>> updatePackageByCustomerId(String id);
 }

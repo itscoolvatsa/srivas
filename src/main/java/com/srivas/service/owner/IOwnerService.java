@@ -6,4 +6,5 @@ import com.srivas.model.OwnerModel;
 public interface IOwnerService {
     OwnerModel createOwner(OwnerSignUpDto ownerSignUpDto);
     OwnerModel signInOwner(String email);
+    OwnerModel findOwnerByPropertyId(String id);
 }

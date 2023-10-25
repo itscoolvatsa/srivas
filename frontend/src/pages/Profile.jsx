@@ -67,6 +67,8 @@ const Profile = () => {
             </div>
           ) : (
             <div>
+              <p>Name: {customerState["customer"]["name"]}</p>
+              <p>Email: {customerState["customer"]["email"]}</p>
               <p>Package: {customerPackage["name"]}</p>
               <p>Remaining View: {customerPackage["remainingView"]}</p>
               <p>Total View: {customerPackage["totalView"]}</p>

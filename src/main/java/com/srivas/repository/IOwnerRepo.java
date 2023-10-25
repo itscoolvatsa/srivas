@@ -12,4 +12,6 @@ public interface IOwnerRepo extends MongoRepository<OwnerModel, String> {
     OwnerModel findOwnerByEmail(String email);
     @Query("{_id:'?0'}")
     OwnerModel findOwnerById(String id);
+    OwnerModel findByPropertiesId(String propertyId);
+
 }

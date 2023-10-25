@@ -1,6 +1,7 @@
 package com.srivas.controller.owner;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.srivas.dto.owner.OwnerCustomerResponseDto;
 import com.srivas.dto.owner.OwnerResponseDto;
 import com.srivas.dto.owner.OwnerSignInDto;
 import com.srivas.dto.owner.OwnerSignUpDto;
@@ -72,5 +73,27 @@ public class OwnerControllerImpl implements IOwnerController {
 
         hashMap.put("owner", ownerResponseDto);
         return new ResponseEntity<>(new JsonResponse<>("Signed In Successfully", hashMap, true), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/{propertyId}")
+    public ResponseEntity<JsonResponse<Object>> findOwnerByPropertyId(@PathVariable String propertyId) throws JsonProcessingException {
+
+        OwnerModel ownerModel = ownerService.findOwnerByPropertyId(propertyId);
+        HashMap<String, Object> hashMap = new HashMap<>();
+
+        if (ownerModel == null) {
+            hashMap.put("error", "owner doesn't exists");
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.USER_DOES_NOT_EXISTS, hashMap, false), HttpStatus.BAD_REQUEST);
+        }
+        OwnerCustomerResponseDto ownerResponseDto = OwnerCustomerResponseDto
+                .builder()
+                .mobile(ownerModel.getMobile())
+                .email(ownerModel.getEmail())
+                .name(ownerModel.getName())
+                .build();
+
+        hashMap.put("owner", ownerResponseDto);
+        return new ResponseEntity<>(new JsonResponse<>("Owner Data", hashMap, true), HttpStatus.OK);
     }
 }

@@ -108,4 +108,20 @@ public class CustomerControllerImpl implements ICustomerController {
         hashMap.put("package", packageModel);
         return new ResponseEntity<>(new JsonResponse<>("package details", hashMap, true), HttpStatus.OK);
     }
+
+    @Override
+    @PostMapping("/update/package/{id}")
+    public ResponseEntity<JsonResponse<Object>> updatePackageByCustomerId(@PathVariable String id) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        PackageModel packageModel = customerService.updatePackageByCustomerId(id);
+
+        if (packageModel == null) {
+            hashMap.put("error", "customer don't have any package");
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.PACKAGE_DOES_NOT_EXISTS, hashMap, true),
+                    HttpStatus.NOT_FOUND);
+        }
+        hashMap.put("package", packageModel);
+        return new ResponseEntity<>(new JsonResponse<>("package updated", hashMap, true), HttpStatus.ACCEPTED);
+
+    }
 }

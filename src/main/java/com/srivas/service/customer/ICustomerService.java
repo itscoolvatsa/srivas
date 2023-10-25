@@ -11,5 +11,6 @@ public interface ICustomerService {
     String createCustomer(CustomerDto customerDto);
     CustomerModel signInCustomer(String email);
     PackageModel addPackageByCustomerId(String id, PackageDto packageDto);
+    PackageModel updatePackageByCustomerId(String id);
     PackageModel getPackageByCustomerId(String id);
 }

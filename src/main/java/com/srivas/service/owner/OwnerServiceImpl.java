@@ -34,4 +34,9 @@ public class OwnerServiceImpl implements IOwnerService {
     public OwnerModel signInOwner(String email) {
         return ownerRepo.findOwnerByEmail(email);
     }
+
+    @Override
+    public OwnerModel findOwnerByPropertyId(String id) {
+        return ownerRepo.findByPropertiesId(id);
+    }
 }

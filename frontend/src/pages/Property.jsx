@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getRequest } from "../customHooks/axios";
+import { getRequest, postRequest } from "../customHooks/axios";
 import { Card, Carousel } from "react-bootstrap";
 import CustomerHeader from "../components/customer/CustomerHeader";
+import { CustomerContext } from "../customHooks/CustomerContext";
+import ShowOwnerDetails from "../components/customer/ShowOwnerDetails";
 
 const Property = () => {
   const [property, setProperty] = useState(null);
   const [address, setAddress] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { customerState } = useContext(CustomerContext);
+  const [customerPackage, setCustomerPackage] = useState(null);
+  const [showOwnerShow, setShowOwnerShow] = useState(false);
+  const [owner, setOwner] = useState("");
 
   const findProperty = async () => {
     const url = `/property/${id}`;
@@ -24,7 +30,47 @@ const Property = () => {
     }
   };
 
-  const getOwnerDetails = () => {};
+  const updatePackage = async (customerId) => {
+    let url = `/customer/update/package/${customerId}`;
+    const [response, err] = await postRequest(url, 202);
+    if (response !== null) {
+      return true;
+    }
+    if (err !== null) {
+      return false;
+    }
+  };
+
+  const getOwnerByPropertyId = async () => {
+    let url = `http://localhost:8080/owner/${id}`;
+    const [response, err] = await getRequest(url, 200);
+    if (response !== null) {
+      setOwner(response["data"]["owner"]);
+      setShowOwnerShow(true);
+    }
+  };
+
+  const getOwnerDetails = async () => {
+    if (customerState === null || customerState["customer"] === null) {
+      alert("please signin first");
+      return;
+    }
+    const customerId = customerState["customer"]["id"];
+    let url = `/customer/get/package/${customerId}`;
+    const [response, err] = await getRequest(url, 200);
+    if (response !== null) {
+      if (response["data"]["package"]["remainingView"] <= 0) {
+        alert("buy a new package you don't have any views left");
+      } else {
+        await updatePackage(customerId);
+        getOwnerByPropertyId();
+        setCustomerPackage(response["data"]["package"]);
+      }
+    }
+    if (err !== null) {
+      alert("you don't have any package buy a new one");
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -175,6 +221,11 @@ const Property = () => {
                     >
                       Get Owner Details
                     </button>
+                    <ShowOwnerDetails
+                      owner={owner}
+                      showOwnerShow={showOwnerShow}
+                      setShowOwnerShow={setShowOwnerShow}
+                    />
                   </div>
                 </div>
               </div>

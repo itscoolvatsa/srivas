@@ -2,6 +2,7 @@ package com.srivas.service.customer;
 
 import com.srivas.dto.customer.CustomerDto;
 import com.srivas.dto.customer.PackageDto;
+import com.srivas.dto.customer.UpdatePackageDto;
 import com.srivas.model.CustomerModel;
 import com.srivas.model.PackageModel;
 import com.srivas.repository.ICustomerRepo;
@@ -60,6 +61,25 @@ public class CustomerServiceImpl implements ICustomerService {
 
         customerRepo.save(updatedCustomer);
         return packageModel;
+    }
+
+    @Override
+    public PackageModel updatePackageByCustomerId(String id) {
+        Optional<CustomerModel> customerModel = customerRepo.findById(id);
+        Optional<PackageModel> packageModel = packageRepo.findById(customerModel.get().getPackageModel().getId());
+
+        if (customerModel == null || packageModel == null) {
+            return null;
+        }
+
+        PackageModel packageModel1 = packageModel.get();
+        int remainingViews = packageModel1.getRemainingView();
+        remainingViews --;
+        packageModel1.setRemainingView(remainingViews);
+
+        packageModel1 = packageRepo.save(packageModel1);
+
+        return packageModel1;
     }
 
     @Override
