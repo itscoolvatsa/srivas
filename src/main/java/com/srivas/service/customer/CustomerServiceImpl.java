@@ -9,6 +9,9 @@ import com.srivas.repository.IPackageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.Optional;
+
 @Service
 public class CustomerServiceImpl implements ICustomerService {
     @Autowired
@@ -37,6 +40,33 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public PackageModel addPackageByCustomerId(String id, PackageDto packageDto) {
-        return null;
+        Optional<CustomerModel> customerModel = customerRepo.findById(id);
+
+        if (customerModel == null) {
+            return null;
+        }
+
+        PackageModel packageModel = PackageModel
+                .builder()
+                .name(packageDto.getName())
+                .totalView(packageDto.getTotalView())
+                .remainingView(packageDto.getTotalView())
+                .postedOn(new Date())
+                .build();
+
+        packageModel = packageRepo.save(packageModel);
+        CustomerModel updatedCustomer = customerModel.get();
+        updatedCustomer.setPackageModel(packageModel);
+
+        customerRepo.save(updatedCustomer);
+        return packageModel;
+    }
+
+    @Override
+    public PackageModel getPackageByCustomerId(String id) {
+        if (customerRepo.findById(id).isEmpty()){
+            return null;
+        }
+        return customerRepo.findById(id).get().getPackageModel();
     }
 }
