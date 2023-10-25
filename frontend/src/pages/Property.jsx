@@ -32,7 +32,10 @@ const Property = () => {
 
   const updatePackage = async (customerId) => {
     let url = `/customer/update/package/${customerId}`;
-    const [response, err] = await postRequest(url, 202);
+    console.log(url);
+    const [response, err] = await postRequest({}, url, 202);
+    console.log(response);
+    console.log(err);
     if (response !== null) {
       return true;
     }
@@ -62,7 +65,7 @@ const Property = () => {
       if (response["data"]["package"]["remainingView"] <= 0) {
         alert("buy a new package you don't have any views left");
       } else {
-        await updatePackage(customerId);
+        updatePackage(customerId);
         getOwnerByPropertyId();
         setCustomerPackage(response["data"]["package"]);
       }
