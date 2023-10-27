@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form, Modal, ModalBody } from "react-bootstrap";
-import { getRequest, postRequest } from "../../customHooks/axios";
+import { postRequest } from "../../customHooks/axios";
 
 const AddPackage = ({
   addPackageShow,
@@ -17,7 +17,7 @@ const AddPackage = ({
   };
 
   const getTotalView = (tier) => {
-    if (tier == "Tier 1") {
+    if (tier === "Tier 1") {
       return 50;
     } else if (tier === "Tier 2") {
       return 20;

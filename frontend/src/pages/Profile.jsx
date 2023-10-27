@@ -42,7 +42,6 @@ const Profile = () => {
   const handleAddProperty = () => {
     setAddPackageShow(true);
   };
-  console.log(customerPackage);
   return (
     <div>
       <CustomerHeader page={"profile"} />

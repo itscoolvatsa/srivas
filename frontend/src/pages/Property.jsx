@@ -12,7 +12,6 @@ const Property = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { customerState } = useContext(CustomerContext);
-  const [customerPackage, setCustomerPackage] = useState(null);
   const [showOwnerShow, setShowOwnerShow] = useState(false);
   const [owner, setOwner] = useState("");
 
@@ -67,7 +66,6 @@ const Property = () => {
       } else {
         updatePackage(customerId);
         getOwnerByPropertyId();
-        setCustomerPackage(response["data"]["package"]);
       }
     }
     if (err !== null) {
