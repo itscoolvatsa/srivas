@@ -24,7 +24,7 @@ const CustomerHeader = ({ page }) => {
   return (
     <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">
+        <a className="navbar-brand" href="/">
           Srivas
         </a>
         <div className="d-flex" id="navbarNav">

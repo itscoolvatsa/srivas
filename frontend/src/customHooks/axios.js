@@ -50,4 +50,22 @@ const getRequest = async (url, successCode) => {
   return [response, error];
 };
 
-export { axiosInstance, postRequest, getRequest };
+const getImage = async (url, successCode) => {
+  try {
+    const response = await axiosInstance(url, { responseType: "arraybuffer" });
+    if (response.status === successCode) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(new Blob([response.data]));
+      });
+    } else {
+      throw new Error(`Failed to fetch image. Status code: ${response.status}`);
+    }
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+export { axiosInstance, postRequest, getRequest, getImage };

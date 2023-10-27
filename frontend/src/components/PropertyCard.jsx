@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { getImage, getRequest } from "../customHooks/axios";
 
 const PropertyCard = ({ property, owner, userType }) => {
   const {
@@ -16,11 +17,26 @@ const PropertyCard = ({ property, owner, userType }) => {
     postedOn,
   } = property;
   const { houseNumber, street, locality, landmark, city } = property.address;
+  const [image, setImage] = useState(null);
 
   const navigate = useNavigate();
   const openProperty = () => {
     navigate(`/property/${id}`);
   };
+
+  const getFirstImage = async () => {
+    let url = `/images/${id}/0.jpg`;
+    try {
+      const response = await getImage(url, 200);
+      setImage(response);
+    } catch (error) {
+      console.error("Error fetching image:", error);
+    }
+  };
+
+  useEffect(() => {
+    getFirstImage(); // Call the function directly
+  }, []); // Empty dependency array to run this effect only once
 
   return (
     <Card className="text-center rounded-0 mb-4">
@@ -55,7 +71,10 @@ const PropertyCard = ({ property, owner, userType }) => {
             <div className="row g-0">
               <div className="col-md-4 border-end d-flex align-items-center justify-content-center">
                 <img
-                  src="https://images.pexels.com/photos/17986565/pexels-photo-17986565/free-photo-of-man-sitting-on-a-chair-on-a-beach-playing-his-guitar.png"
+                  src={
+                    image ||
+                    "https://images.pexels.com/photos/17986565/pexels-photo-17986565/free-photo-of-man-sitting-on-a-chair-on-a-beach-playing-his-guitar.png"
+                  }
                   className="img-fluid"
                   alt="..."
                   style={{

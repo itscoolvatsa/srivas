@@ -14,6 +14,7 @@ const Property = () => {
   const { customerState } = useContext(CustomerContext);
   const [showOwnerShow, setShowOwnerShow] = useState(false);
   const [owner, setOwner] = useState("");
+  const [imageList, setImageList] = useState(null);
 
   const findProperty = async () => {
     const url = `/property/${id}`;
@@ -29,12 +30,18 @@ const Property = () => {
     }
   };
 
+  const findImages = async () => {
+    let url = `/images/${id}`;
+    const [response, err] = await getRequest(url, 200);
+    if (response !== null) {
+      console.log(response["data"]["images"]);
+      setImageList(response["data"]["images"]);
+    }
+  };
+
   const updatePackage = async (customerId) => {
     let url = `/customer/update/package/${customerId}`;
-    console.log(url);
     const [response, err] = await postRequest({}, url, 202);
-    console.log(response);
-    console.log(err);
     if (response !== null) {
       return true;
     }
@@ -81,6 +88,10 @@ const Property = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    findImages();
+  }, []);
+
   return (
     <div>
       <CustomerHeader />
@@ -113,21 +124,18 @@ const Property = () => {
               <div className="col-md-6">
                 <div>
                   <Carousel data-bs-theme="dark">
-                    <Carousel.Item>
-                      <img
-                        className="d-block w-100 img-fluid overflow-hidden" // Fix the class name here
-                        style={{ maxHeight: "400px" }} // Set a max height to contain the image
-                        src="https://images.pexels.com/photos/17986565/pexels-photo-17986565/free-photo-of-man-sitting-on-a-chair-on-a-beach-playing-his-guitar.png"
-                        alt="First slide"
-                      />
-                      <Carousel.Caption>
-                        {/* <h5>First slide label</h5>
-                        <p>
-                          Nulla vitae elit libero, a pharetra augue mollis
-                          interdum.
-                        </p> */}
-                      </Carousel.Caption>
-                    </Carousel.Item>
+                    {imageList !== null &&
+                      imageList.map((image, index) => (
+                        <Carousel.Item key={index}>
+                          <img
+                            id={image}
+                            className="d-block w-100 img-fluid overflow-hidden"
+                            style={{ maxHeight: "400px" }}
+                            src={`http://localhost:8080/images/${id}/${image}`}
+                            alt={`Slide ${index + 1}`}
+                          />
+                        </Carousel.Item>
+                      ))}
                   </Carousel>
                 </div>
               </div>

@@ -1,5 +1,6 @@
 package com.srivas.controller.image;
 
+import com.srivas.util.JsonResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,5 +14,5 @@ public interface IImageController {
     public ResponseEntity<ClassPathResource> getImage(@PathVariable String folderId, @PathVariable String imageId) throws IOException;
 
     @GetMapping("/{folderId}")
-    public ResponseEntity<List<String>> getImagesInFolder(@PathVariable String folderId);
+    public ResponseEntity<JsonResponse<Object>> getImagesInFolder(@PathVariable String folderId);
 }

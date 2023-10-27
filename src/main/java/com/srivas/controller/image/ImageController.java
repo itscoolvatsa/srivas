@@ -1,21 +1,23 @@
 package com.srivas.controller.image;
 
+import com.srivas.exception.ErrorsEnum;
+import com.srivas.util.JsonResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/images")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ImageController implements IImageController {
 
     @GetMapping("/{folderId}/{imageId}")
@@ -27,6 +29,8 @@ public class ImageController implements IImageController {
         if (classPathResource.exists() && classPathResource.isReadable()) {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(getContentType(".jpg"));
+            headers.setContentType(getContentType(".png"));
+            headers.setContentType(getContentType(".gif"));
             return ResponseEntity
                     .ok()
                     .headers(headers)
@@ -39,13 +43,16 @@ public class ImageController implements IImageController {
     }
 
     @GetMapping("/{folderId}")
-    public ResponseEntity<List<String>> getImagesInFolder(@PathVariable String folderId) {
+    public ResponseEntity<JsonResponse<Object>> getImagesInFolder(@PathVariable String folderId) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+
         String folderPath = "src/main/resources/static/images/" + folderId;
         File directory = new File(folderPath);
         File[] files = directory.listFiles();
 
         if (files == null || files.length == 0) {
-            return ResponseEntity.notFound().build();
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.NO_IMAGE_FOUND, hashMap, false),
+                    HttpStatus.NOT_FOUND);
         }
 
         List<String> fileNames = new ArrayList<>();
@@ -56,10 +63,12 @@ public class ImageController implements IImageController {
         }
 
         if (fileNames.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
+            return new ResponseEntity<>(new JsonResponse<>(ErrorsEnum.NO_IMAGE_FOUND, hashMap, false),
+                    HttpStatus.NOT_FOUND);
 
-        return ResponseEntity.ok(fileNames);
+        }
+        hashMap.put("images", fileNames);
+        return new ResponseEntity<>(new JsonResponse<>("Images Available", hashMap, true), HttpStatus.OK);
     }
 
 
