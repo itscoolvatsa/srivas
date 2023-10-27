@@ -37,7 +37,7 @@ public class OwnerPropertyController implements IOwnerPropertyController {
     })
     public ResponseEntity<JsonResponse<Object>> createPropertyByOwnerId(@PathVariable String id,
                                                                         @RequestPart("addPropertyDtoString") String addPropertyDtoString,
-                                                                        @RequestParam("images") MultipartFile[] images) throws JsonProcessingException {
+                                                                        @RequestPart("images") MultipartFile[] images) throws JsonProcessingException {
 
         HashMap<String, Object> hashMap = new HashMap<>();
         AddPropertyDto addPropertyDto = objectMapper.readValue(addPropertyDtoString, AddPropertyDto.class);

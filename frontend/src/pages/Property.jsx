@@ -124,7 +124,7 @@ const Property = () => {
               <div className="col-md-6">
                 <div>
                   <Carousel data-bs-theme="dark">
-                    {imageList !== null &&
+                    {imageList !== null ? (
                       imageList.map((image, index) => (
                         <Carousel.Item key={index}>
                           <img
@@ -135,7 +135,19 @@ const Property = () => {
                             alt={`Slide ${index + 1}`}
                           />
                         </Carousel.Item>
-                      ))}
+                      ))
+                    ) : (
+                      <Carousel.Item>
+                        <img
+                          className="d-block w-100 img-fluid overflow-hidden"
+                          style={{ maxHeight: "400px" }}
+                          src={
+                            "https://images.pexels.com/photos/17986565/pexels-photo-17986565/free-photo-of-man-sitting-on-a-chair-on-a-beach-playing-his-guitar.png"
+                          }
+                          alt={`Slide`}
+                        />
+                      </Carousel.Item>
+                    )}
                   </Carousel>
                 </div>
               </div>

@@ -23,8 +23,6 @@ public class ImageController implements IImageController {
     @GetMapping("/{folderId}/{imageId}")
     public ResponseEntity<ClassPathResource> getImage(@PathVariable String folderId, @PathVariable String imageId) throws IOException {
         ClassPathResource classPathResource = new ClassPathResource("static/images/" + folderId + "/" + imageId);
-        System.out.println(classPathResource.getPath());
-        // Check if the image exists and is readable
 
         if (classPathResource.exists() && classPathResource.isReadable()) {
             HttpHeaders headers = new HttpHeaders();

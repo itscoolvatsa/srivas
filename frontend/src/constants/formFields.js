@@ -250,6 +250,15 @@ const propertyFieldsButtons = [
     isRequired: false,
     placeholder: "Parking",
   },
+  {
+    labelText: "Add Pictures",
+    id: "images",
+    name: "images",
+    type: "file",
+    multiple: true,
+    accept: "image/*",
+    isRequired: false,
+  },
 ];
 
 export {

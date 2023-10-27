@@ -6,6 +6,7 @@ import {
   addressFields,
 } from "../../constants/formFields";
 import { postRequest } from "../../customHooks/axios";
+import { formToJSON } from "axios";
 
 let propertyFieldState = {};
 let addressFieldState = {};
@@ -35,6 +36,7 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
     new Array()
   );
   const [sucess, setSucess] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleClose = () => setShow(false);
 
@@ -86,11 +88,19 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
     }
   };
 
+  const handleFileChange = (e) => {
+    const selectedFiles = e.target.files;
+    console.log(selectedFiles);
+    setSelectedFiles(selectedFiles);
+  };
+
   const handleSubmit = async (e) => {
     setError("");
     e.preventDefault();
 
-    let body = {
+    const formData = new FormData();
+
+    let addPropertyDtoString = {
       addressDto: {
         name: addressState["name"],
         houseNumber: addressState["houseNumber"],
@@ -116,14 +126,48 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
       },
     };
 
+    formData.append(
+      "addPropertyDtoString",
+      JSON.stringify({
+        addressDto: {
+          name: addressState["name"],
+          houseNumber: addressState["houseNumber"],
+          street: addressState["street"],
+          locality: addressState["locality"],
+          landmark: addressState["landmark"],
+          city: addressState["city"],
+          state: addressState["state"],
+          pincode: addressState["pincode"],
+        },
+        propertyDto: {
+          rent: propertyState["rent"],
+          deposit: propertyState["deposit"],
+          areaSqFt: propertyState["areaSqFt"],
+          bedroom: propertyState["bedroom"],
+          bathroom: propertyState["bathroom"],
+          floor: propertyState["floor"],
+          description: propertyState["description"],
+          shortDescription: propertyState["shortDescription"],
+          parking: selectedParkingOptions,
+          furnishingStatus: furnishingStatus,
+          gatedSecurity: gatedSecurity,
+        },
+      })
+    );
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append("images", selectedFiles[i]);
+    }
+
     let url = `/owner/property/add/${id}`;
-    const [response, err] = await postRequest(body, url, 201);
+    let headers = { "Content-Type": "multipart/form-data" };
+    const [response, err] = await postRequest(formData, url, 201, headers);
     if (response !== null) {
       setPropertyAddedState(true);
       setSucess("property added successfully!!!");
       handleClose();
     }
     if (err !== null) {
+      console.log(err);
       setError(err["data"]["data"]["error"]);
     }
   };
@@ -294,6 +338,23 @@ const AddProperty = ({ id, show, setShow, setPropertyAddedState }) => {
                       onChange={handleParkingChange}
                     />
                   ))}
+                </Form.Group>
+                <Form.Group
+                  controlId={propertyFieldsButtons[3].id}
+                  className="d-flex gap-4"
+                >
+                  <Form.Label>
+                    {propertyFieldsButtons[3].labelText} :
+                  </Form.Label>
+                  <Form.Control
+                    className="w-50"
+                    type={propertyFieldsButtons[3].type}
+                    multiple={propertyFieldsButtons[3].multiple}
+                    name={propertyFieldsButtons[3].name}
+                    id={propertyFieldsButtons[3].id}
+                    accept={propertyFieldsButtons[3].accept}
+                    onChange={handleFileChange}
+                  />
                 </Form.Group>
               </div>
               <div className="text-danger">{error !== null ? error : null}</div>

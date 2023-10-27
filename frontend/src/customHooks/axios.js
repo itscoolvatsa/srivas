@@ -5,13 +5,17 @@ const axiosInstance = axios.create({
   timeout: 10000,
 });
 
-const postRequest = async (body, url, status) => {
+const postRequest = async (body, url, status, headers = null) => {
   let response;
   let error;
+  if (headers === null) {
+    headers = { "Content-Type": "application/json" };
+  }
   let res = axiosInstance({
     data: body,
     url: url,
     method: "POST",
+    headers: headers,
   });
 
   await res
